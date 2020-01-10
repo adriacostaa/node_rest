@@ -2,7 +2,7 @@ const express = require('express');
 
 const User = require('../models/User');
 
-const bcryptjs = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 
@@ -34,6 +34,9 @@ router.post('/authenticate', async(req, res)=>{
        return res.status(400).send({ error: 'User not found' });
     }
 
+    if (!await bcrypt.compare(password, user.password)){
+        return res.status(400).send({ error: 'Invalid password' })
+    }
 
 });
 
