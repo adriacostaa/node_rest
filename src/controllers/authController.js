@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-//autenticaçao
+//autenticacao
 router.post('/authenticate', async(req, res)=>{
     const { email, password } = req.body;
 
@@ -33,11 +33,10 @@ router.post('/authenticate', async(req, res)=>{
     if(!user){
        return res.status(400).send({ error: 'User not found' });
     }
-
     if (!await bcrypt.compare(password, user.password)){
-        return res.status(400).send({ error: 'Invalid password' })
+        return res.status(400).send({ error: 'Invalid password' });
     }
-
+    res.send({ user });
 });
 
 
