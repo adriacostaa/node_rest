@@ -6,6 +6,12 @@ const authConfig = require('../config/auth');
 
 const router = express.Router();
 
+function generateToken(params = {}){
+    return jwt.sign(params, authConfig.secret, {
+        expiresIn: 86400
+    });
+}
+
 //registro
 router.post('/register', async (req, res) => {
     const { email } = req.body;
@@ -37,11 +43,11 @@ router.post('/authenticate', async(req, res)=>{
         return res.status(400).send({ error: 'Invalid password' });
     }
     user.password = undefined;
-    const token = jwt.sign({ id: user.id }, authConfig.secret, {
-        expiresIn: 86400
-    });
-    res.send({ user, token });
-});
 
+   res.send({
+       user,
+       token: generateToken({ id: user.id }),
+   });
+});
 
 module.exports = app => app.use('/auth', router);

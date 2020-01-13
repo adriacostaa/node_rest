@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/nodeapi', { useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true,});
-
+try {
+     mongoose.connect('mongodb://localhost/nodeapi', { useCreateIndex: true, useUnifiedTopology: true, useNewUrlParser: true});
+  } catch (error) {
+    handleError(error);
+  }
 
 mongoose.Promise = global.Promise;
 
-module.exports = mongoose;
+module.exports = mongoose; 
