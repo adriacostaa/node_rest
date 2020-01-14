@@ -15,5 +15,5 @@ require('./controllers/authController')(app);
 require('./controllers/projectController')(app);
 
 app.listen(3000, () => {
-    console.log('Servidor rodando');
+    console.log('OK SERVER');
 });
