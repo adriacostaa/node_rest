@@ -8,7 +8,7 @@ const router = express.Router();
 
 function generateToken(params = {}){
     return jwt.sign(params, authConfig.secret, {
-        expiresIn: 86400
+        expiresIn: 86400 //1 dia
     });
 }
 
@@ -23,7 +23,10 @@ router.post('/register', async (req, res) => {
 
         user.password = undefined;
 
-        return res.send({ user });
+        return res.send({ 
+            user,
+            token: generateToken({ id: user.id }),
+         });
 
     } catch (err) {
         return res.status(400).send('register');
